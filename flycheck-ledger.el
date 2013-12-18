@@ -35,14 +35,22 @@
 
 (flycheck-define-checker ledger
   "A checker for ledger files, showing unmatched balances and failed checks."
-  :command ("ledger" "-f" source-inplace "balance")
+  :command ("ledger" (option-flag "--pedantic" flycheck-ledger-pedantic) (eval (when (eq flycheck-ledger-pedantic 'check-payees) "--check-payees")) "-f" source-inplace "balance")
   :error-patterns
   ((error line-start "While parsing file \"" (file-name) "\", line " line ":" (zero-or-more whitespace) "\n"
-          (zero-or-more line-start (or "While " "> ") (one-or-more not-newline) "\n" )
+          (one-or-more line-start (or "While " "> ") (one-or-more not-newline) "\n" )
           (message (minimal-match (zero-or-more line-start (zero-or-more not-newline) "\n"))
                    "Error: " (one-or-more not-newline) "\n"))
    )
   :modes ledger-mode)
+
+(flycheck-def-option-var flycheck-ledger-pedantic () ledger
+  "Whether to be pedantic in ledger.
+
+When equal to `check-payees', be pedantic on account name and payees,
+When non-nil, be pedantic on account name,
+otherwise don't be pedantic."
+  :type '(radio (const :tag "Check only syntax" nil) (const :tag "Check account name" t) (const :tag "Also check payees" check-payees)))
 
 (add-to-list 'flycheck-checkers 'ledger)
 
