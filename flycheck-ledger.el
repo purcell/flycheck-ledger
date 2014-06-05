@@ -1,6 +1,6 @@
 ;;; flycheck-ledger.el --- Flycheck integration for ledger files
 
-;; Copyright (C) 2013  Steve Purcell
+;; Copyright (C) 2013-2014  Steve Purcell
 
 ;; Author: Steve Purcell <steve@sanityinc.com>
 ;; Version: DEV
