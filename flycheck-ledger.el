@@ -38,7 +38,7 @@
   :command ("ledger" (option-flag "--pedantic" flycheck-ledger-pedantic) (eval (when (eq flycheck-ledger-pedantic 'check-payees) "--check-payees")) "-f" source-inplace "balance")
   :error-patterns
   ((error line-start "While parsing file \"" (file-name) "\", line " line ":" (zero-or-more whitespace) "\n"
-          (one-or-more line-start (or "While " "> ") (one-or-more not-newline) "\n" )
+          (zero-or-more line-start (or "While " "> ") (one-or-more not-newline) "\n" )
           (message (minimal-match (zero-or-more line-start (zero-or-more not-newline) "\n"))
                    "Error: " (one-or-more not-newline) "\n"))
    )
