@@ -1,3 +1,6 @@
+[![Melpa Status](http://melpa.milkbox.net/packages/flycheck-ledger-badge.svg)](http://melpa.milkbox.net/#/flycheck-ledger)
+[![Melpa Stable Status](http://melpa-stable.milkbox.net/packages/flycheck-ledger-badge.svg)](http://melpa-stable.milkbox.net/#/flycheck-ledger)
+
 flycheck-ledger
 ===============
 
