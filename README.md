@@ -1,5 +1,5 @@
-[![Melpa Status](http://melpa.milkbox.net/packages/flycheck-ledger-badge.svg)](http://melpa.milkbox.net/#/flycheck-ledger)
-[![Melpa Stable Status](http://melpa-stable.milkbox.net/packages/flycheck-ledger-badge.svg)](http://melpa-stable.milkbox.net/#/flycheck-ledger)
+[![Melpa Status](http://melpa.org/packages/flycheck-ledger-badge.svg)](http://melpa.org/#/flycheck-ledger)
+[![Melpa Stable Status](http://stable.melpa.org/packages/flycheck-ledger-badge.svg)](http://stable.melpa.org/#/flycheck-ledger)
 
 flycheck-ledger
 ===============
@@ -74,4 +74,4 @@ Author links:
 [tags]: https://github.com/purcell/flycheck-ledger/tags
 [ledger]: https://ledger-cli.org/
 [marmalade]: http://marmalade-repo.org
-[melpa]: http://melpa.milkbox.net
+[melpa]: http://melpa.org
