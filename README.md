@@ -12,8 +12,7 @@ Installation
 You'll need Emacs 24 for `flycheck`, so the recommended way to get
 `flycheck-ledger` is as a package from the [MELPA][melpa]
 repository. The version of `flycheck-ledger` there will always be
-up-to-date. There are also packages in [Marmalade][marmalade], which
-track the [latest numbered tag][tags].
+up-to-date.
 
 If you insist on doing things the hard way, first ensure `flycheck` is
 installed, then download this code and add the directory to your Emacs
@@ -73,5 +72,4 @@ Author links:
 [flycheck]: https://github.com/flycheck/flycheck
 [tags]: https://github.com/purcell/flycheck-ledger/tags
 [ledger]: https://ledger-cli.org/
-[marmalade]: http://marmalade-repo.org
 [melpa]: http://melpa.org
