@@ -33,6 +33,11 @@
 
 (require 'flycheck)
 
+(flycheck-def-option-var flycheck-ledger-zero-accounts nil ledger-zero
+  "Whether to check account names, tags, and payees from cleared transactions."
+  :type '(repeat string)
+  :safe #'flycheck-string-list-p)
+
 (flycheck-define-checker ledger
   "A checker for ledger files, showing unmatched balances and failed checks."
   :command ("ledger"
@@ -40,12 +45,30 @@
             (option-flag "--pedantic" flycheck-ledger-pedantic)
             (eval (when (eq flycheck-ledger-pedantic 'check-payees) "--check-payees"))
             "-f" source-inplace
-            "balance")
+            "balance"
+            ;; to find non-zero zero accounts:
+            "--flat" "--no-total"
+            "--balance-format" "%(scrub(display_total))\t\t%(account())\n"
+            (eval flycheck-ledger-zero-accounts))
   :error-patterns
   ((error line-start "While parsing file \"" (file-name) "\", line " line ":" (zero-or-more whitespace) "\n"
           (zero-or-more line-start (or "While " "> ") (one-or-more not-newline) "\n" )
           (message (minimal-match (zero-or-more line-start (zero-or-more not-newline) "\n"))
                    "Error: " (one-or-more not-newline) "\n")))
+  :error-parser
+  (lambda (output checker buffer)
+    (let ((pattern-errors (flycheck-parse-with-patterns output checker buffer)))
+      (or pattern-errors
+          (when (> (length flycheck-ledger-zero-accounts) 0)
+            (flycheck-ledger--zero-error-parser output checker buffer)))))
+  :verify
+  (lambda (checker)
+    (let ((has-accounts (> (length flycheck-ledger-zero-accounts) 0)))
+      (list
+       (flycheck-verification-result-new
+        :label "accounts"
+        :message (if has-accounts (format "%s" flycheck-ledger-zero-accounts) "none")
+        :face 'success))))
   :modes ledger-mode)
 
 (flycheck-def-option-var flycheck-ledger-pedantic () ledger
@@ -61,6 +84,53 @@ otherwise don't be pedantic."
 (flycheck-def-option-var flycheck-ledger-explicit nil ledger
   "Whether to check account names, tags, and payees from cleared transactions."
   :type 'boolean)
+
+(defun flycheck-ledger--zero-last-position-of-account (account buffer)
+  "Return (LINE . COL) of last occurence of ACCOUNT in BUFFER.
+
+Return nil if ACCOUNT can't be found in BUFFER."
+  (with-current-buffer buffer
+    (save-restriction
+      (save-excursion
+        (goto-char (point-max))
+        (when (search-backward account nil t)
+          (cons (line-number-at-pos (point))
+                (1+ (- (point) (line-beginning-position)))))))))
+
+(defun flycheck-ledger--zero-error-parser (output checker buffer)
+  "Return errors found in OUTPUT.
+
+CHECKER is a `flycheck-ledger-zero' checker.
+
+BUFFER is the buffer being checked by flycheck.
+
+Return a list of parsed errors and warnings (as `flycheck-error'
+objects)."
+  (let ((errors (list))
+        (buffer (current-buffer)))
+    (save-match-data
+      (with-temp-buffer
+        (insert output)
+        (goto-char (point-min))
+        (while (re-search-forward "^\\(.*\\)\\>\t\t\\<\\(.*\\)$" nil t)
+          (let* ((amount (string-trim (match-string-no-properties 1)))
+                 (account (string-trim (match-string-no-properties 2)))
+                 (message (format "Account %s should have zero value but has %s"
+                                  account amount))
+                 (position (flycheck-ledger--zero-last-position-of-account account buffer))
+                 (line (or (car position) 1))
+                 (column (or (cdr position) 0)))
+            (push
+             (flycheck-error-new-at
+              line column 'error message
+              :checker checker
+              :filename (buffer-file-name buffer) :buffer buffer)
+             errors)))))
+    errors))
+
+(flycheck-def-option-var flycheck-ledger-zero-accounts nil ledger-zero
+  "Whether to check account names, tags, and payees from cleared transactions."
+  :type '(repeat string))
 
 (add-to-list 'flycheck-checkers 'ledger)
 
