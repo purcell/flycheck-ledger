@@ -21,7 +21,7 @@ installed, then download this code and add the directory to your Emacs
 
 Then, in your `init.el`:
 
-```lisp
+```elisp
 (eval-after-load 'flycheck
   '(require 'flycheck-ledger))
 ```
