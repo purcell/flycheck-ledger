@@ -86,7 +86,7 @@ otherwise don't be pedantic."
   :type 'boolean)
 
 (defun flycheck-ledger--zero-last-position-of-account (account buffer)
-  "Return (LINE . COL) of last occurence of ACCOUNT in BUFFER.
+  "Return (LINE . COL) of last occurrence of ACCOUNT in BUFFER.
 
 Return nil if ACCOUNT can't be found in BUFFER."
   (with-current-buffer buffer
