@@ -1,11 +1,12 @@
-;;; flycheck-ledger.el --- Flycheck integration for ledger files
+;;; flycheck-ledger.el --- Flycheck integration for ledger files  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2013-2014  Steve Purcell
 
 ;; Author: Steve Purcell <steve@sanityinc.com>
+;; Homepage: https://github.com/purcell/flycheck-ledger
 ;; Version: DEV
 ;; Keywords: convenience languages tools
-;; Package-Requires: ((flycheck "0.15"))
+;; Package-Requires: ((emacs "24.1") (flycheck "0.15"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
