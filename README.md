@@ -62,13 +62,12 @@ About
 
 <hr>
 
-Author links:
 
-[![](http://api.coderwall.com/purcell/endorsecount.png)](http://coderwall.com/purcell)
+[💝 Support this project and my other Open Source work](https://www.patreon.com/sanityinc)
 
-[![](http://www.linkedin.com/img/webpromo/btn_liprofile_blue_80x15.png)](http://uk.linkedin.com/in/stevepurcell)
+[💼 LinkedIn profile](https://uk.linkedin.com/in/stevepurcell)
 
-[Steve Purcell's blog](http://www.sanityinc.com/) // [@sanityinc on Twitter](https://twitter.com/sanityinc)
+[✍ sanityinc.com](http://www.sanityinc.com/)
 
 [flycheck]: https://github.com/flycheck/flycheck
 [tags]: https://github.com/purcell/flycheck-ledger/tags
